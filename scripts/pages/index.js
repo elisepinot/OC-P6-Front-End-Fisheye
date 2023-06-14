@@ -34,7 +34,7 @@
             throw new Error('Erreur lors de la récupération des données des photographes.'); // Gestion des erreurs si la requête échoue
             }
             const data = await response.json(); // Conversion de la réponse en format JSON
-            console.log(data.photographers[0])
+            // console.log(data.photographers[0])
             return data.photographers; // Retourne les données des photographes
         } catch (error) {
             console.error(error); // Affiche l'erreur dans la console en cas d'échec de la requête
@@ -42,7 +42,7 @@
         }
         
     }
-          
+ 
 
     /* 
     * displayData prend en paramètre le tableau des photographes récupérés.
@@ -58,9 +58,11 @@
         const photographersSection = document.querySelector(".photographer_section");
 
         photographers.forEach((photographer) => {
-            //pour chaque photographe, j'envoie le photographe au photogrpaherFactory, je stocke dans photogra^her Model
+            //pour chaque photographe, j'envoie le photographe au photographerFactory, je stocke dans photographer Model
             const photographerModel = photographerFactory(photographer);
+            console.log("La variable photographerModel stocke : " + photographerModel)
             const userCardDOM = photographerModel.getUserCardDOM();
+            console.log("La variable userCardDOM stocke : " + userCardDOM)
             photographersSection.appendChild(userCardDOM);
         });
 
@@ -82,6 +84,7 @@
             // const { photographers } = await getPhotographers();
             // Modifié car fonction getPhotographers() ne renvoie pas un objet avec une propriété "photographers", mais renvoie directement l'objet qui contient les 6 photographes
             const photographers = await getPhotographers();
+            console.log("La variable photographers stocke : " + photographers)
             displayData(photographers);
         } catch (error){
             console.error(error); //Affiche l'erreur dans la console en cas d'echec
@@ -92,6 +95,7 @@
     
     init();
 
+   
 
        
 
