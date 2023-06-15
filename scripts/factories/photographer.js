@@ -27,7 +27,6 @@ function photographerFactory(data) {
 
     const link = `../photographer.html?id=${id}`;
 
-
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
 

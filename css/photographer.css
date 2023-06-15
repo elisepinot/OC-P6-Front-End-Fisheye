@@ -78,3 +78,10 @@ form input {
     border: none;
     border-radius: 5px;
 }
+
+
+.media-item img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
