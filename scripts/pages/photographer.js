@@ -77,7 +77,7 @@ async function getMedia() {
   ); //Filter on the media with the photographerId property which is the same as the one in the URL
 
   return photographerMedia;
-  //photographerMedia = points at several [object Object]
+  //photographerMedia = points at several [object Object] which are all media created by the selected photographer
 }
 
 /********** Display the media **********/
@@ -105,3 +105,5 @@ async function mediaInit() {
 }
 
 mediaInit();
+
+/********** DISPLAY OF THE BOX ON THE BOTTOM RIGHT: PRICE + LIKES ***********/
