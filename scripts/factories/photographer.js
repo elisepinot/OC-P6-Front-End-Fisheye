@@ -101,7 +101,10 @@ function photographerFactory(data) {
     button.parentNode.insertBefore(detailsContainer, button);
     button.insertAdjacentElement("afterend", imageContainer);
 
-    return photographerHeader;
+    const fixedBox = document.querySelector(".fixed-box-price");
+    fixedBox.textContent = price + "€/jour";
+
+    // return photographerHeader;
   }
 
   // return { name, picture, getUserCardDOM, city, country, tagline, price, getPhotographerDOM}
