@@ -1,82 +1,86 @@
 @import url("photographer.css");
 
 body {
-    font-family: "DM Sans", sans-serif;
-    margin: 0;
+  font-family: "DM Sans", sans-serif;
+  margin: 0;
 }
 
-
 header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
 }
 
 h1 {
-    color: #901C1C;
-    margin-right: 100px;
+  color: #901c1c;
+  margin-right: 100px;
 }
 
 .logo {
-    height: 50px;
-    margin-left: 100px;
+  height: 50px;
+  margin-left: 100px;
 }
 
 .photographer_section {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 70px;
-    margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 70px;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .photographer_section article {
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 310px;
+  /* line-height: normal; */
 }
 
 .photographer_section article h2 {
-    color: #D3573C;
-    font-size: 36px;
-    margin-block-end: 0.2em;
+  color: #d3573c;
+  font-size: 36px;
+  font-weight: 400;
+  margin-block-start: 0.2em;
+  margin-block-end: 0.2em;
+  /* line-height: 47px; */
 }
 
-.place{
-    color: #901C1C;
-    font-size: 20px;
+.photographer_section .place {
+  color: #901c1c;
+  font-size: 13px;
+  /* line-height: 17px; */
 }
 
-.tagline{
-    color: #000000;
-    font-size: 12px;
-    
+.photographer_section .tagline {
+  color: #000000;
+  font-size: 10px;
+  font-weight: 400;
+  /* line-height: 13px; */
 }
 
-.price{
-    color: #525252;
-    font-size: 12px;
-    
+.photographer_section .price {
+  color: #757575;
+  font-size: 9px;
+  font-weight: 400;
+  /* line-height: 12px; */
 }
 
-.place, .tagline, .price{
-    margin-block-start: 0;
-    margin-block-end: 8px;
-
+.photographer_section .place,
+.photographer_section .tagline,
+.photographer_section .price {
+  margin-block-start: 0;
+  margin-block-end: 0.2em;
 }
 
-
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
-}
-
-.id-photo{
-    object-fit: cover;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
+.id-photo {
+  object-fit: cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
 }

@@ -1,102 +1,50 @@
-    // async function getPhotographers() {
-    //     // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
-    //     // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
-    //     let photographers = [
-    //         {
-    //             "name": "Ma data test",
-    //             "id": 1,
-    //             "city": "Paris",
-    //             "country": "France",
-    //             "tagline": "Ceci est ma data test",
-    //             "price": 400,
-    //             "portrait": "account.png"
-    //         },
-    //         {
-    //             "name": "Autre data test",
-    //             "id": 2,
-    //             "city": "Londres",
-    //             "country": "UK",
-    //             "tagline": "Ceci est ma data test 2",
-    //             "price": 500,
-    //             "portrait": "account.png"
-    //         },
-    //     ]
-    //     // et bien retourner le tableau photographers seulement une fois récupéré
-    //     return ({
-    //         photographers: [...photographers, ...photographers, ...photographers]})
-    // }
+/********** Get the data of the JSON file - photographers only ***********/
 
-    async function getPhotographers() {
-
-        try {
-            const response = await fetch('/data/photographers.json');
-            if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des données des photographes.'); // Gestion des erreurs si la requête échoue
-            }
-            const data = await response.json(); // Conversion de la réponse en format JSON
-            // console.log(data.photographers[0])
-            return data.photographers; // Retourne les données des photographes
-        } catch (error) {
-            console.error(error); // Affiche l'erreur dans la console en cas d'échec de la requête
-            return []; // Retourne un tableau vide en cas d'échec
-        }
-        
+async function getPhotographers() {
+  try {
+    const response = await fetch("/data/photographers.json");
+    if (!response.ok) {
+      throw new Error(
+        "Erreur lors de la récupération des données des photographes."
+      );
     }
- 
+    const data = await response.json(); // Convert the response into JSON format
+    return data.photographers; // Return the photographers objects only
+  } catch (error) {
+    console.error(error); // Display the error in the console in case of failure
+    return []; // Return an empty array in case of error
+  }
+}
 
-    /* 
-    * displayData prend en paramètre le tableau des photographes récupérés.
-    * Rôles : 
-    * 1. parcourir le tableau des photographes
-    * 2. créer une instance de photographe à l'aide du photographerFactory
-    * 3. afficher  la carte du photographe dans la section appropriée du HTML
-    * */
+/********** Display photographers ***********/
 
+async function displayData(photographers) {
+  const photographersSection = document.querySelector(".photographer_section");
 
-    async function displayData(photographers) {
-        //photographers : simplement le paramètre de la fonction, n'a rien à voir avec la fonction précédente
-        const photographersSection = document.querySelector(".photographer_section");
+  //Each photographer is sent to the photographerFactory: an instance is created, then added to the photographer section
+  photographers.forEach((photographer) => {
+    const photographerModel = photographerFactory(photographer);
+    // photographerModel : [object Object]
+    const userCardDOM = photographerModel.getUserCardDOM();
+    // userCardDom : [object HTMLElement]
+    photographersSection.appendChild(userCardDOM);
+  });
+}
 
-        photographers.forEach((photographer) => {
-            //pour chaque photographe, j'envoie le photographe au photographerFactory, je stocke dans photographer Model
-            const photographerModel = photographerFactory(photographer);
-            console.log("La variable photographerModel stocke : " + photographerModel)
-            const userCardDOM = photographerModel.getUserCardDOM();
-            console.log("La variable userCardDOM stocke : " + userCardDOM)
-            photographersSection.appendChild(userCardDOM);
-        });
+/********** Initialize the photographer section **********/
 
+async function init() {
+  try {
+    // Récupère les datas des photographes
+    // Code au départ :
+    // const { photographers } = await getPhotographers();
+    // Modifié car fonction getPhotographers() ne renvoie pas un objet avec une propriété "photographers", mais renvoie directement l'objet qui contient les 6 photographes
+    const photographers = await getPhotographers();
+    console.log("La variable photographers stocke : " + photographers);
+    displayData(photographers);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    };
-
-  
-
-
-    /* 
-    * Fonction responsable de l'initialisation du projet
-    * Elle appelle getPhotographers pour obtenir les données des photographes
-    * Puis elle appelle displayData pour afficher les données dans l'interface utilisateur */
-    
-    async function init() {
-        try{
-            // Récupère les datas des photographes
-            // Code au départ : 
-            // const { photographers } = await getPhotographers();
-            // Modifié car fonction getPhotographers() ne renvoie pas un objet avec une propriété "photographers", mais renvoie directement l'objet qui contient les 6 photographes
-            const photographers = await getPhotographers();
-            console.log("La variable photographers stocke : " + photographers)
-            displayData(photographers);
-        } catch (error){
-            console.error(error); //Affiche l'erreur dans la console en cas d'echec
-        }
-    };
-
-    /* La fonction init est appelée pour démarrer le projet */
-    
-    init();
-
-   
-
-       
-
-
+init();
