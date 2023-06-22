@@ -109,7 +109,7 @@ async function displayMediaOLD(media) {
 // async function getPhotographerById() {
 
 //     try {
-//         const response = await fetch('/data/photographers.json');
+//         const response = await fetch('./data/photographers.json');
 //         if (!response.ok) {
 //         throw new Error('Erreur lors de la récupération des données des photographes.'); // Gestion des erreurs si la requête échoue
 //         }
