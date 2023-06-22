@@ -15,14 +15,14 @@ async function mediaFactory(mediaItem) {
     const photographerName = await getPhotographerNameForLink();
 
     if (mediaItem.image) {
-      const mediaURL = `./assets/photographers/${photographerName}/${image}`;
+      const mediaURL = `././assets/photographers/${photographerName}/${image}`;
 
       const imageElement = document.createElement("img");
       imageElement.setAttribute("src", mediaURL);
       imageElement.alt = mediaItem.title;
       mediaElement.appendChild(imageElement);
     } else if (mediaItem.video) {
-      const mediaURL = `./assets/photographers/${photographerName}/${video}`;
+      const mediaURL = `././assets/photographers/${photographerName}/${video}`;
 
       const videoElement = document.createElement("video");
       videoElement.setAttribute("src", mediaURL);

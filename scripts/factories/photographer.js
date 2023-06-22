@@ -22,7 +22,7 @@ function photographerFactory(data) {
 
   // console.log(data); // retourne 6 objets (1 objet = 1 photographe)
 
-  const picture = `./assets/photographers/Photographers_ID_Photos/${portrait}`;
+  const picture = `././assets/photographers/Photographers_ID_Photos/${portrait}`;
 
   const link = `./photographer.html?id=${id}`;
 
