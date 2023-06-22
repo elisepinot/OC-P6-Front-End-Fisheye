@@ -12,7 +12,7 @@ async function getPhotographNameForURL() {
 async function mediaURL() {
   const photographerName = await getPhotographNameForURL();
   //URL A MODIFIER
-  const mediaURL = `../assets/photographers/${photographerName}/Architecture_Connected_Curves.jpg`;
+  const mediaURL = `./assets/photographers/${photographerName}/Architecture_Connected_Curves.jpg`;
   //console.log(mediaURL)
   return mediaURL;
 }
@@ -170,7 +170,7 @@ async function displayMediaOLD(media) {
 //     const photographerName = await getPhotographerNameForLink();
 
 //     if (mediaItem.image) {
-//       const mediaURL = `../assets/photographers/${photographerName}/${image}`;
+//       const mediaURL = `./assets/photographers/${photographerName}/${image}`;
 //       // console.log("La variable mediaURL stocke: " + mediaURL)
 
 //       const imageElement = document.createElement("img");
@@ -179,7 +179,7 @@ async function displayMediaOLD(media) {
 //       imageElement.alt = mediaItem.title;
 //       mediaElement.appendChild(imageElement);
 //     } else if (mediaItem.video) {
-//       const mediaURL = `../assets/photographers/${photographerName}/${video}`;
+//       const mediaURL = `./assets/photographers/${photographerName}/${video}`;
 
 //       const videoElement = document.createElement("video");
 //       videoElement.setAttribute("src", mediaURL);
