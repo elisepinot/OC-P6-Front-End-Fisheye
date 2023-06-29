@@ -80,15 +80,25 @@ async function getMedia() {
   //photographerMedia = points at several [object Object] which are all media created by the selected photographer
 }
 
-/********** Display the media **********/
+/********** Display the media in the galery and in the lightbox **********/
 
 async function displayMedia(media) {
+  //Reminder : media = all photographer's media
   const mediaSection = document.querySelector(".media-section");
 
   for (const mediaItem of media) {
     const mediaModel = await mediaFactory(mediaItem);
     const mediaCardDOM = await mediaModel.getMediaCardDom();
+    //mediaCardDom = [object HTMLElement] -> c'est l'article qui contient l'image/la vidéo
     mediaSection.appendChild(mediaCardDOM);
+
+    mediaCardDOM.addEventListener("click", function () {
+      openLightbox(mediaItem.id);
+      //mediaItem.id = l'id du média sur lequel on clique
+    });
+
+    await mediaModel.getMediaLightbox();
+    // Je crée les médias à afficher dans la lightbox
   }
 }
 
