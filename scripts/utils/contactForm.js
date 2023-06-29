@@ -103,7 +103,7 @@ function validate(event) {
   emailCheck();
   messageCheck();
 
-  if (firstNameCheck() && lastNameCheck() && emailCheck()) {
+  if (firstNameCheck() && lastNameCheck() && emailCheck() && messageCheck()) {
     storeDataInConsole();
     closeModal();
     resetForm();
