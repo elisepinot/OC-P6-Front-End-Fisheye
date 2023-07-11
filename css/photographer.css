@@ -154,23 +154,6 @@ form textarea {
   /* filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));*/
 }
 
-.fixed-box-price {
-  position: fixed;
-  bottom: 0px;
-  right: 36px;
-  background: #db8876;
-  border-radius: 5px;
-  padding: 16px;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 31px;
-  text-align: center;
-
-  color: #000000;
-}
-
 .media-section {
   margin: 0 100px;
   /* padding: 0 40px; */
@@ -182,16 +165,14 @@ form textarea {
 .media-item {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: left;
-  /* /* width: 350px; */
-  height: 351px;
+  /* justify-content: space-evenly; */
 }
 .media-item img,
 .media-item video {
   object-fit: cover;
+  object-position: top;
   width: 100%;
-  height: 300px;
+  height: 280px;
   border-radius: 5%;
 }
 
@@ -289,4 +270,75 @@ form textarea {
   font-size: 24px;
   margin-bottom: 0;
   margin-top: 8px;
+}
+
+.media-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #901c1c;
+  font-size: 24px;
+  margin-top: 8px;
+  /* margin-bottom: 16px; */
+}
+
+.like-content {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.like-content span {
+  font-weight: 500;
+}
+
+.like-content span.liked {
+  font-weight: 500;
+  color: #d3573c;
+}
+
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  fill: none;
+}
+
+.heart-not-liked {
+  fill: #911c1c;
+  transition: fill 0.2s;
+}
+
+.heart-liked {
+  fill: #d3573c;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.like-content.liked .heart-liked {
+  opacity: 1;
+}
+
+/*********** Fixed box: price and popularity **********/
+
+.fixed-box {
+  position: fixed;
+  bottom: 0px;
+  right: 36px;
+  background: #db8876;
+  border-radius: 5px;
+  padding: 16px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: center;
+
+  color: #000000;
+
+  display: flex;
+  gap: 48px;
+  z-index: 20;
 }

@@ -76,30 +76,60 @@ async function getMedia() {
     (item) => item.photographerId === selectedPhotographer
   ); //Filter on the media with the photographerId property which is the same as the one in the URL
 
+  //ajotuer un switch sur URL.search.param - récupérer valeur sort by - switch avec les 3 cas (popularuty, date, etc.)
+
   return photographerMedia;
+  // DOIT RETOURNER LE TABLEAU DANS LE BON ORDRE
   //photographerMedia = points at several [object Object] which are all media created by the selected photographer
 }
 
 /********** Display the media in the galery and in the lightbox **********/
 
 async function displayMedia(media) {
-  //Reminder : media = all photographer's media
   const mediaSection = document.querySelector(".media-section");
+  let totalLikes = 0; // Variable pour stocker le total des likes
 
   for (const mediaItem of media) {
     const mediaModel = await mediaFactory(mediaItem);
     const mediaCardDOM = await mediaModel.getMediaCardDom();
-    //mediaCardDom = [object HTMLElement] -> c'est l'article qui contient l'image/la vidéo
     mediaSection.appendChild(mediaCardDOM);
 
-    mediaCardDOM.addEventListener("click", function () {
-      openLightbox(mediaItem.id);
-      //mediaItem.id = l'id du média sur lequel on clique
-    });
+    const likeContentDiv = mediaCardDOM.querySelector(".like-content");
+
+    setupLikeButton(likeContentDiv);
+    setupLightboxTrigger(mediaCardDOM, mediaItem.id);
 
     await mediaModel.getMediaLightbox();
     // Je crée les médias à afficher dans la lightbox
+    // await calculateTotalLikes(); // Calcul du total des likes après chaque itération de la boucle
+
+    const likeCounterSpan = mediaCardDOM.querySelector(".individual-nb-likes");
+    const likes = parseInt(likeCounterSpan.textContent);
+    if (!isNaN(likes)) {
+      totalLikes += likes;
+    }
   }
+
+  displayTotalLikes(totalLikes);
+}
+
+//Open the lightbox except if the clicked element is part of the .like-content div
+function setupLightboxTrigger(mediaCardDOM, mediaId) {
+  mediaCardDOM.addEventListener("click", function (event) {
+    const clickedElement = event.target;
+    if (!isLikeContentElement(clickedElement)) {
+      openLightbox(mediaId);
+    }
+  });
+}
+
+function isLikeContentElement(element) {
+  //element is the clicked element: we want to check it is not part of the like-content div
+  return (
+    //closest() checks if 'element' has an ancestor with the like-content class
+    element.classList.contains("like-content") ||
+    element.closest(".like-content") !== null
+  );
 }
 
 /*********** Initialize the media section **********/
@@ -114,6 +144,74 @@ async function mediaInit() {
   }
 }
 
+// mediaInit() appelée plus bas pour que le nombre total de likes s'affichent après
 mediaInit();
 
-/********** DISPLAY OF THE BOX ON THE BOTTOM RIGHT: PRICE + LIKES ***********/
+/********** LIKES COUNTER ***********/
+
+/*********** Likes counter for each media ***********/
+function setupLikeButton(likeContentDiv) {
+  // const heartIcon = likeContentDiv.querySelector(".heart-icon");
+
+  likeContentDiv.addEventListener("click", function (event) {
+    event.stopPropagation();
+    const likeCountSpan = likeContentDiv.querySelector("span");
+    const currentLikes = parseInt(likeCountSpan.textContent);
+
+    if (likeContentDiv.classList.contains("liked")) {
+      likeContentDiv.classList.remove("liked");
+      likeCountSpan.textContent = currentLikes - 1;
+      likeCountSpan.classList.remove("liked");
+    } else {
+      likeContentDiv.classList.add("liked");
+      likeCountSpan.textContent = currentLikes + 1;
+      likeCountSpan.classList.add("liked");
+    }
+    const totalLikes = calculateNewTotalLikes();
+    updateTotalLikes(totalLikes);
+  });
+}
+
+const likeContentDivs = document.querySelectorAll(".like-content");
+
+likeContentDivs.forEach(function (likeContentDiv) {
+  setupLikeButton(likeContentDiv);
+});
+
+/*********** Likes counter: total ***********/
+
+//The price is generated in the Factory Function
+function displayTotalLikes(totalLikes) {
+  const fixedBox = document.querySelector(".fixed-box");
+  const heartIcon = document.createElement("div");
+  heartIcon.classList.add("likes-total-counter");
+  const priceParagraph = fixedBox.querySelector("p");
+  fixedBox.insertBefore(heartIcon, priceParagraph);
+  heartIcon.innerHTML = `<span class="likes-total">${totalLikes}</span><svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 23 23">
+  <g transform="translate (3 5)"><path d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z" fill="#000000"/>
+  </g></svg>`;
+}
+
+function calculateNewTotalLikes() {
+  const likeCountSpans = document.querySelectorAll(".individual-nb-likes");
+  let totalLikes = 0;
+
+  for (const likeCountSpan of likeCountSpans) {
+    const likes = parseInt(likeCountSpan.textContent);
+    if (!isNaN(likes)) {
+      totalLikes += likes;
+    }
+  }
+  return totalLikes;
+}
+
+function updateTotalLikes(totalLikes) {
+  const likesTotalSpan = document.querySelector(".likes-total");
+  likesTotalSpan.textContent = totalLikes.toString();
+}
+
+/*********** Go to homepage */
+
+function goToHomepage() {
+  window.location.href = "index.html";
+}
