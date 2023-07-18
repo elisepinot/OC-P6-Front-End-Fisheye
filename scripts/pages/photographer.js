@@ -76,10 +76,7 @@ async function getMedia() {
     (item) => item.photographerId === selectedPhotographer
   ); //Filter on the media with the photographerId property which is the same as the one in the URL
 
-  //ajotuer un switch sur URL.search.param - récupérer valeur sort by - switch avec les 3 cas (popularuty, date, etc.)
-
   return photographerMedia;
-  // DOIT RETOURNER LE TABLEAU DANS LE BON ORDRE
   //photographerMedia = points at several [object Object] which are all media created by the selected photographer
 }
 
@@ -87,9 +84,12 @@ async function getMedia() {
 
 async function displayMedia(media) {
   const mediaSection = document.querySelector(".media-section");
-  let totalLikes = 0; // Variable pour stocker le total des likes
+  let totalLikes = 0;
 
-  for (const mediaItem of media) {
+  const sortBy = urlParams.get("sortby");
+  const sortedMedia = getSortedMedia(media, sortBy);
+
+  for (const mediaItem of sortedMedia) {
     const mediaModel = await mediaFactory(mediaItem);
     const mediaCardDOM = await mediaModel.getMediaCardDom();
     mediaSection.appendChild(mediaCardDOM);
@@ -99,10 +99,7 @@ async function displayMedia(media) {
     setupLikeButton(likeContentDiv);
     setupLightboxTrigger(mediaCardDOM, mediaItem.id);
 
-    await mediaModel.getMediaLightbox();
-    // Je crée les médias à afficher dans la lightbox
-    // await calculateTotalLikes(); // Calcul du total des likes après chaque itération de la boucle
-
+    await mediaModel.getMediaLightbox(); //Creation of the media in the lightbox
     const likeCounterSpan = mediaCardDOM.querySelector(".individual-nb-likes");
     const likes = parseInt(likeCounterSpan.textContent);
     if (!isNaN(likes)) {
@@ -130,6 +127,7 @@ function isLikeContentElement(element) {
     element.classList.contains("like-content") ||
     element.closest(".like-content") !== null
   );
+  //Boolean: return 'true' or 'false'
 }
 
 /*********** Initialize the media section **********/
@@ -144,17 +142,16 @@ async function mediaInit() {
   }
 }
 
-// mediaInit() appelée plus bas pour que le nombre total de likes s'affichent après
 mediaInit();
 
 /********** LIKES COUNTER ***********/
 
 /*********** Likes counter for each media ***********/
-function setupLikeButton(likeContentDiv) {
-  // const heartIcon = likeContentDiv.querySelector(".heart-icon");
 
+//Add +1 or remove -1 for each media when users click on the like button
+function setupLikeButton(likeContentDiv) {
   likeContentDiv.addEventListener("click", function (event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     const likeCountSpan = likeContentDiv.querySelector("span");
     const currentLikes = parseInt(likeCountSpan.textContent);
 
@@ -178,9 +175,11 @@ likeContentDivs.forEach(function (likeContentDiv) {
   setupLikeButton(likeContentDiv);
 });
 
-/*********** Likes counter: total ***********/
+/*********** Likes counter: total number of likes ***********/
 
 //The price is generated in the Factory Function
+//displayTotalLikes is called in displayMedia
+
 function displayTotalLikes(totalLikes) {
   const fixedBox = document.querySelector(".fixed-box");
   const heartIcon = document.createElement("div");
@@ -192,6 +191,7 @@ function displayTotalLikes(totalLikes) {
   </g></svg>`;
 }
 
+//Calculate the new number of total likes when users add a 'like' to a media
 function calculateNewTotalLikes() {
   const likeCountSpans = document.querySelectorAll(".individual-nb-likes");
   let totalLikes = 0;
@@ -214,4 +214,45 @@ function updateTotalLikes(totalLikes) {
 
 function goToHomepage() {
   window.location.href = "index.html";
+}
+
+/********** Edit the URL adding a new parameter 'sortby' */
+const filterSelect = document.getElementById("filter-select");
+filterSelect.addEventListener("change", updateURL);
+
+function addSortByParam() {
+  let sortBy = urlParams.get("sortby");
+  if (!sortBy) {
+    sortBy = "popularity";
+    urlParams.set("sortby", sortBy);
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    filterSelect.value = "popularity";
+    history.replaceState(null, null, newUrl);
+  } else {
+    filterSelect.value = sortBy;
+  }
+}
+
+addSortByParam();
+
+function updateURL() {
+  const selectedValue = filterSelect.value;
+  // const urlParams = new URLSearchParams(window.location.search);
+  urlParams.set("sortby", selectedValue);
+  const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+  // history.replaceState(null, null, newUrl); // Mettre à jour l'URL sans rafraîchir la page
+  // location.reload();
+
+  window.location.replace(newUrl);
+}
+
+function getSortedMedia(media, sortBy) {
+  switch (sortBy) {
+    case "popularity":
+      return media.sort((a, b) => b.likes - a.likes);
+    case "date":
+      return media.sort((a, b) => new Date(b.date) - new Date(a.date));
+    case "title":
+      return media.sort((a, b) => a.title.localeCompare(b.title));
+  }
 }
