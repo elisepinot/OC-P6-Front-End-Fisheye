@@ -5,6 +5,7 @@
 function openLightbox(mediaId) {
   const lightboxModal = document.querySelector("#lightbox-modal");
   lightboxModal.style.display = "flex";
+  lightboxModal.setAttribute("tabindex", "0");
 
   const lightboxContainers = document.querySelectorAll(".lightbox-container");
   const lightboxContainersArray = Array.from(lightboxContainers);
@@ -71,39 +72,8 @@ function closeLightbox() {
   lightbox.style.display = "none";
 }
 
-/************ ANCIEN CODE POUR AFFICHER LA LIGHTBOX */
-
-// function openLightbox(mediaId) {
-//   //Display of the lightbox
-//   const lightboxModal = document.querySelector("#lightbox-modal");
-//   lightboxModal.style.display = "block";
-
-//   const lightboxContainers = document.querySelectorAll(".lightbox-container");
-//   const lightboxContainersArray = Array.from(lightboxContainers);
-
-//   lightboxContainersArray.forEach(function (container, index) {
-//     const imgElement = container.querySelector("img");
-//     const videoElement = container.querySelector("video");
-
-//     if (imgElement && parseInt(imgElement.dataset.id) === mediaId) {
-//       container.style.display = "flex";
-//       // navigateMedia(index);
-//       // Appel de la fonction pour naviguer vers l'index actuel
-//     } else if (videoElement && parseInt(videoElement.dataset.id) === mediaId) {
-//       container.style.display = "flex";
-//       // navigateMedia(index);
-//       // Appel de la fonction pour naviguer vers l'index actuel
-//     } else {
-//       container.style.display = "none"; // Masque les autres divs
-//     }
-//   });
-
-//   function navigateMedia(direction) {
-//     // Code pour naviguer vers l'élément à l'index spécifié
-//     // Vous pouvez implémenter votre logique de navigation ici
-
-//     console.log("Navigating to index:", direction);
-//   }
-
-//   navigateMedia(index); // Appel initial pour naviguer vers l'index trouvé
-// }
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Escape") {
+    closeLightbox();
+  }
+});

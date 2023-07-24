@@ -22,7 +22,8 @@ async function mediaFactory(mediaItem) {
       imageElement.classList.add("media-diaplayed", `id-${mediaItem.id}`);
       imageElement.setAttribute("data-id", mediaItem.id);
       imageElement.setAttribute("src", mediaURL);
-      imageElement.alt = mediaItem.title;
+      imageElement.alt = "Photo de " + mediaItem.title;
+      imageElement.setAttribute("tabindex", "3");
       mediaElement.appendChild(imageElement);
     } else if (mediaItem.video) {
       const mediaURL = `././assets/photographers/${photographerName}/${video}`;
@@ -30,9 +31,9 @@ async function mediaFactory(mediaItem) {
       const videoElement = document.createElement("video");
       videoElement.classList.add("media-displayed", `id-${mediaItem.id}`);
       videoElement.setAttribute("data-id", mediaItem.id);
-
+      videoElement.alt = "Vidéo de " + mediaItem.title;
       videoElement.setAttribute("src", mediaURL);
-      videoElement.controls = true;
+      videoElement.setAttribute("tabindex", "3");
       mediaElement.appendChild(videoElement);
     }
 
@@ -41,12 +42,15 @@ async function mediaFactory(mediaItem) {
     mediaCaption.classList.add("media-caption");
     mediaElement.appendChild(mediaCaption);
 
-    const mediaTitle = document.createElement("p");
+    const mediaTitle = document.createElement("h2");
+    mediaTitle.classList.add("media-title");
     mediaTitle.innerHTML = title;
+    mediaTitle.setAttribute("tabindex", "3");
     mediaCaption.appendChild(mediaTitle);
 
     //Create a div .like-content inside the .media-caption div, to include the heart icon and the likes counter
     const likeContent = document.createElement("div");
+    likeContent.setAttribute("tabindex", "3");
     mediaCaption.appendChild(likeContent);
     likeContent.classList.add("like-content");
 

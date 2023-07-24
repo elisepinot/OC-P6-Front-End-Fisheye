@@ -2,6 +2,7 @@
 function displayModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
+  modal.focus();
   const filter = document.createElement("div");
   document.body.appendChild(filter);
   filter.style.display = "block";
@@ -16,6 +17,12 @@ function closeModal() {
   const filter = document.querySelector(".when-modal-is-displayed");
   filter.classList.remove("when-modal-is-displayed");
 }
+
+document.addEventListener("keyup", function (event) {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});
 
 /*********** ***********/
 /*********** Add an event listener on the form  ***********/

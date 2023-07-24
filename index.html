@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -11,12 +11,23 @@
     <title>Fisheye</title>
   </head>
   <body>
-    <header>
-      <img src="assets/images/logo.png" class="logo" onclick="goToHomepage()" />
-      <h1>Nos photographes</h1>
+    <header role="banner">
+      <img
+        src="assets/images/logo.png"
+        class="logo"
+        onclick="goToHomepage()"
+        onkeypress="handleKeyPress(event)"
+        alt="Fisheye logo"
+        tabindex="0"
+        role="img"
+      />
+      <h1 tabindex="0" role="heading">Nos photographes</h1>
     </header>
     <main id="main">
-      <div class="photographer_section"></div>
+      <div
+        class="photographer_section"
+        aria-label="Présentation des photographes"
+      ></div>
     </main>
     <!-- Fichier JS utilisé pour créer une "factory" ou une classe qui gère la logique associée aux photographes -->
     <script src="scripts/factories/photographer.js"></script>

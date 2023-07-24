@@ -19,25 +19,33 @@ function photographerFactory(data) {
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("class", "id-photo");
+    img.setAttribute("alt", "Photo de " + name);
+    // img.setAttribute("tabindex", "0");
     const photographerName = document.createElement("h2");
     photographerName.textContent = name;
+    photographerName.setAttribute("tabindex", "0");
 
     const place = document.createElement("p");
     place.setAttribute("class", "place");
     place.textContent = country + ", " + city;
+    place.setAttribute("tabindex", "0");
 
     const motto = document.createElement("p");
     motto.setAttribute("class", "tagline");
     motto.textContent = tagline;
+    motto.setAttribute("tabindex", "0");
 
     const cost = document.createElement("p");
     cost.setAttribute("class", "price");
     cost.textContent = price + "€/jour";
+    cost.setAttribute("tabindex", "0");
 
     //code ajouté Etape 4 + article.appendChild(img) mis en commentaire
     const linkToPhotographerPage = document.createElement("a");
     linkToPhotographerPage.setAttribute("href", link);
+    // img.setAttribute("tabindex", "0");
     linkToPhotographerPage.appendChild(img);
+    linkToPhotographerPage.setAttribute("tabindex", "0");
     article.appendChild(linkToPhotographerPage);
 
     // article.appendChild(img);
@@ -57,16 +65,19 @@ function photographerFactory(data) {
     detailsContainer.setAttribute("class", "details_container");
     // photographerHeader.appendChild(detailsContainer) //Pas besoin d'écrire cette ligne puisqu'on précise plus bas qu'on veut ajouter cette élément avant le bouton
 
-    const photographerName = document.createElement("h2");
+    const photographerName = document.createElement("h1");
     photographerName.textContent = name;
+    photographerName.setAttribute("tabindex", "2");
 
     const place = document.createElement("p");
     place.setAttribute("class", "place");
     place.textContent = city + ", " + country;
+    place.setAttribute("tabindex", "2");
 
     const motto = document.createElement("p");
     motto.setAttribute("class", "tagline");
     motto.textContent = tagline;
+    motto.setAttribute("tabindex", "2");
 
     detailsContainer.appendChild(photographerName);
     detailsContainer.appendChild(place);
@@ -79,6 +90,8 @@ function photographerFactory(data) {
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("class", "id-photo");
+    img.setAttribute("tabindex", "2");
+    img.setAttribute("alt", "Photo de " + name);
 
     photographerHeader.appendChild(imageContainer);
     imageContainer.appendChild(img);
