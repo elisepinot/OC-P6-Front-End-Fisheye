@@ -118,6 +118,12 @@ function setupLightboxTrigger(mediaCardDOM, mediaId) {
       openLightbox(mediaId);
     }
   });
+
+  mediaCardDOM.addEventListener("keyup", function (event) {
+    if (event.key === "Enter" && !isLikeContentElement(event.target)) {
+      openLightbox(mediaId);
+    }
+  });
 }
 
 function isLikeContentElement(element) {
@@ -148,32 +154,62 @@ mediaInit();
 
 /*********** Likes counter for each media ***********/
 
-//Add +1 or remove -1 for each media when users click on the like button
-function setupLikeButton(likeContentDiv) {
-  likeContentDiv.addEventListener("click", function (event) {
-    // event.stopPropagation();
-    const likeCountSpan = likeContentDiv.querySelector("span");
-    const currentLikes = parseInt(likeCountSpan.textContent);
-
-    if (likeContentDiv.classList.contains("liked")) {
-      likeContentDiv.classList.remove("liked");
-      likeCountSpan.textContent = currentLikes - 1;
-      likeCountSpan.classList.remove("liked");
-    } else {
-      likeContentDiv.classList.add("liked");
-      likeCountSpan.textContent = currentLikes + 1;
-      likeCountSpan.classList.add("liked");
-    }
-    const totalLikes = calculateNewTotalLikes();
-    updateTotalLikes(totalLikes);
-  });
-}
-
 const likeContentDivs = document.querySelectorAll(".like-content");
 
 likeContentDivs.forEach(function (likeContentDiv) {
   setupLikeButton(likeContentDiv);
 });
+
+//Add +1 or remove -1 for each media when users click on the like button
+
+function setupLikeButton(likeContentDiv) {
+  likeContentDiv.addEventListener("click", function (event) {
+    toggleLike(likeContentDiv);
+  });
+
+  likeContentDiv.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      toggleLike(likeContentDiv);
+    }
+  });
+}
+
+function toggleLike(likeContentDiv) {
+  const likeCountSpan = likeContentDiv.querySelector("span");
+  const currentLikes = parseInt(likeCountSpan.textContent);
+
+  if (likeContentDiv.classList.contains("liked")) {
+    likeContentDiv.classList.remove("liked");
+    likeCountSpan.textContent = currentLikes - 1;
+    likeCountSpan.classList.remove("liked");
+  } else {
+    likeContentDiv.classList.add("liked");
+    likeCountSpan.textContent = currentLikes + 1;
+    likeCountSpan.classList.add("liked");
+  }
+  const totalLikes = calculateNewTotalLikes();
+  updateTotalLikes(totalLikes);
+}
+
+// function setupLikeButton(likeContentDiv) {
+//   likeContentDiv.addEventListener("click", function (event) {
+//     // event.stopPropagation();
+//     const likeCountSpan = likeContentDiv.querySelector("span");
+//     const currentLikes = parseInt(likeCountSpan.textContent);
+
+//     if (likeContentDiv.classList.contains("liked")) {
+//       likeContentDiv.classList.remove("liked");
+//       likeCountSpan.textContent = currentLikes - 1;
+//       likeCountSpan.classList.remove("liked");
+//     } else {
+//       likeContentDiv.classList.add("liked");
+//       likeCountSpan.textContent = currentLikes + 1;
+//       likeCountSpan.classList.add("liked");
+//     }
+//     const totalLikes = calculateNewTotalLikes();
+//     updateTotalLikes(totalLikes);
+//   });
+// }
 
 /*********** Likes counter: total number of likes ***********/
 
@@ -182,6 +218,7 @@ likeContentDivs.forEach(function (likeContentDiv) {
 
 function displayTotalLikes(totalLikes) {
   const fixedBox = document.querySelector(".fixed-box");
+  fixedBox.setAttribute("tabindex", "2");
   const heartIcon = document.createElement("div");
   heartIcon.classList.add("likes-total-counter");
   const priceParagraph = fixedBox.querySelector("p");
@@ -214,6 +251,12 @@ function updateTotalLikes(totalLikes) {
 
 function goToHomepage() {
   window.location.href = "index.html";
+}
+
+function handleKeyPress(event) {
+  if (event.key === "Enter") {
+    goToHomepage();
+  }
 }
 
 /********** Edit the URL adding a new parameter 'sortby' */
