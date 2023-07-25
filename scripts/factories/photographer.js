@@ -19,40 +19,52 @@ function photographerFactory(data) {
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("class", "id-photo");
-    img.setAttribute("alt", "Photo de " + name);
-    // img.setAttribute("tabindex", "0");
+    img.setAttribute("alt", name);
+
     const photographerName = document.createElement("h2");
     photographerName.textContent = name;
-    photographerName.setAttribute("tabindex", "0");
+    // photographerName.setAttribute("tabindex", "0");
 
     const place = document.createElement("p");
     place.setAttribute("class", "place");
     place.textContent = country + ", " + city;
-    place.setAttribute("tabindex", "0");
+    // place.setAttribute("tabindex", "0");
 
     const motto = document.createElement("p");
     motto.setAttribute("class", "tagline");
     motto.textContent = tagline;
-    motto.setAttribute("tabindex", "0");
+    // motto.setAttribute("tabindex", "0");
 
     const cost = document.createElement("p");
     cost.setAttribute("class", "price");
     cost.textContent = price + "€/jour";
-    cost.setAttribute("tabindex", "0");
+    // cost.setAttribute("tabindex", "0");
 
     //code ajouté Etape 4 + article.appendChild(img) mis en commentaire
     const linkToPhotographerPage = document.createElement("a");
     linkToPhotographerPage.setAttribute("href", link);
-    // img.setAttribute("tabindex", "0");
     linkToPhotographerPage.appendChild(img);
     linkToPhotographerPage.setAttribute("tabindex", "0");
+    linkToPhotographerPage.setAttribute(
+      "aria-label",
+      `Voir la gallerie de ${name}`
+    );
     article.appendChild(linkToPhotographerPage);
+    linkToPhotographerPage.appendChild(photographerName);
 
     // article.appendChild(img);
-    article.appendChild(photographerName);
-    article.appendChild(place);
-    article.appendChild(motto);
-    article.appendChild(cost);
+    // article.appendChild(photographerName);
+    const photographerDetails = document.createElement("div");
+    photographerDetails.setAttribute("tabindex", "O");
+    photographerDetails.setAttribute("role", "group");
+    photographerDetails.appendChild(place);
+    photographerDetails.appendChild(motto);
+    photographerDetails.appendChild(cost);
+
+    // article.appendChild(place);
+    // article.appendChild(motto);
+    // article.appendChild(cost);
+    article.appendChild(photographerDetails);
 
     return article;
   }

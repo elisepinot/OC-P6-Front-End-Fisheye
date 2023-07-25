@@ -2,7 +2,18 @@
 function displayModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
+
+  addAriaHidden();
+  prevTabIndex();
+
   modal.focus();
+
+  const photographerName = document.querySelector(
+    ".details_container h1"
+  ).textContent;
+
+  const contactModalTitle = document.getElementById("contact_modal_title");
+  contactModalTitle.innerHTML = `Contactez-moi <br> ${photographerName}`;
   const filter = document.createElement("div");
   document.body.appendChild(filter);
   filter.style.display = "block";
@@ -16,6 +27,10 @@ function closeModal() {
   modal.style.display = "none";
   const filter = document.querySelector(".when-modal-is-displayed");
   filter.classList.remove("when-modal-is-displayed");
+  restoreTabindex();
+  removeAriaHidden();
+  const contactButton = document.querySelector(".contact_button");
+  contactButton.focus();
 }
 
 document.addEventListener("keyup", function (event) {
@@ -49,8 +64,10 @@ function firstNameCheck() {
       "Veuillez entrer 2 caractères ou plus pour le champ du prénom"
     );
     firstName.parentElement.setAttribute("data-error-visible", true);
+    firstName.parentElement.setAttribute("aria-live", "assertive");
   } else {
     firstName.parentElement.setAttribute("data-error-visible", false);
+    firstName.parentElement.removeAttribute("aria-live");
     return true;
   }
 }

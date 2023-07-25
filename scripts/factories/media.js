@@ -22,7 +22,7 @@ async function mediaFactory(mediaItem) {
       imageElement.classList.add("media-diaplayed", `id-${mediaItem.id}`);
       imageElement.setAttribute("data-id", mediaItem.id);
       imageElement.setAttribute("src", mediaURL);
-      imageElement.alt = "Photo de " + mediaItem.title;
+      imageElement.alt = mediaItem.title + ", closeup view when clicking";
       imageElement.setAttribute("tabindex", "3");
       mediaElement.appendChild(imageElement);
     } else if (mediaItem.video) {
@@ -31,7 +31,7 @@ async function mediaFactory(mediaItem) {
       const videoElement = document.createElement("video");
       videoElement.classList.add("media-displayed", `id-${mediaItem.id}`);
       videoElement.setAttribute("data-id", mediaItem.id);
-      videoElement.alt = "Vidéo de " + mediaItem.title;
+      videoElement.alt = mediaItem.title + ", closeup view when clicking";
       videoElement.setAttribute("src", mediaURL);
       videoElement.setAttribute("tabindex", "3");
       mediaElement.appendChild(videoElement);
@@ -54,7 +54,7 @@ async function mediaFactory(mediaItem) {
     mediaCaption.appendChild(likeContent);
     likeContent.classList.add("like-content");
 
-    likeContent.innerHTML = `<span class="individual-nb-likes">${likes}</span><svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none">
+    likeContent.innerHTML = `<span class="individual-nb-likes" aria-label="likes">${likes}</span><svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none">
     <g transform="translate(3 3)"><path class="heart-not-liked" d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z"/>
     <path class="heart-liked" d="M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z"/>
     </g></svg>`;
@@ -78,9 +78,10 @@ async function mediaFactory(mediaItem) {
       const imageElement = document.createElement("img");
       imageElement.classList.add("media-lightbox", `id-${mediaItem.id}`);
       imageElement.setAttribute("data-id", mediaItem.id);
-
       imageElement.setAttribute("src", mediaURL);
-      imageElement.alt = mediaItem.title;
+      // imageElement.alt = mediaItem.title;
+      imageElement.alt = "";
+      imageElement.setAttribute("aria-labelledby", "media-title");
       lightboxContainer.appendChild(imageElement);
     } else if (mediaItem.video) {
       const mediaURL = `././assets/photographers/${photographerName}/${video}`;
@@ -88,7 +89,6 @@ async function mediaFactory(mediaItem) {
       const videoElement = document.createElement("video");
       videoElement.classList.add("media-lightbox", `id-${mediaItem.id}`);
       videoElement.setAttribute("data-id", mediaItem.id);
-
       videoElement.setAttribute("src", mediaURL);
       videoElement.controls = true;
       lightboxContainer.appendChild(videoElement);
@@ -96,6 +96,8 @@ async function mediaFactory(mediaItem) {
 
     const mediaTitle = document.createElement("p");
     mediaTitle.innerHTML = title;
+    mediaTitle.setAttribute("tabindex", "3");
+    mediaTitle.setAttribute("class", "media-title");
     lightboxContainer.appendChild(mediaTitle);
 
     return lightboxContainer;
