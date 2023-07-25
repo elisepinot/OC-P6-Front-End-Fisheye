@@ -110,7 +110,7 @@ async function displayMedia(media) {
   displayTotalLikes(totalLikes);
 }
 
-//Open the lightbox except if the clicked element is part of the .like-content div
+//Open Lightbox except if the clicked element is part of the .like-content div
 function setupLightboxTrigger(mediaCardDOM, mediaId) {
   mediaCardDOM.addEventListener("click", function (event) {
     const clickedElement = event.target;
