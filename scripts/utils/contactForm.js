@@ -1,4 +1,5 @@
 /********** Display contact form and apply a filter on the body ***********/
+
 function displayModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
@@ -28,7 +29,7 @@ function closeModal() {
   modal.style.display = "none";
   const filter = document.querySelector(".when-modal-is-displayed");
   filter.classList.remove("when-modal-is-displayed");
-  restoreTabindex();
+  restoreTabIndex();
   removeAriaHidden();
   const contactButton = document.querySelector(".contact_button");
   contactButton.focus();

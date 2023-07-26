@@ -8,6 +8,7 @@ function openLightbox(mediaId) {
 
   addAriaHidden();
   prevTabIndex();
+  totalLikesZIndex();
 
   lightboxModal.focus();
 
@@ -30,7 +31,6 @@ function openLightbox(mediaId) {
     }
   });
 }
-
 /********** Navigate among media ***********/
 
 function navigateMedia(direction) {
@@ -78,7 +78,7 @@ function closeLightbox() {
   const lightbox = document.getElementById("lightbox-modal");
   lightbox.style.display = "none";
   removeAriaHidden();
-  restoreTabindex();
+  restoreTabIndex();
 
   const firstChildOfMediaSection = document.querySelector(
     ".media-section :first-child"
@@ -104,7 +104,7 @@ function prevTabIndex() {
   });
 }
 
-function restoreTabindex() {
+function restoreTabIndex() {
   const elementsWithTabindex = document.querySelectorAll(
     "header [tabindex], main [tabindex]"
   );
@@ -132,4 +132,9 @@ function removeAriaHidden() {
   backgroundElements.forEach((element) => {
     element.removeAttribute("aria-hidden");
   });
+}
+
+function totalLikesZIndex() {
+  const $fixedBox = document.querySelector(".fixed-box");
+  $fixedBox.style.zIndex = "1";
 }

@@ -163,7 +163,7 @@ likeContentDivs.forEach(function (likeContentDiv) {
 //Add +1 or remove -1 for each media when users click on the like button
 
 function setupLikeButton(likeContentDiv) {
-  likeContentDiv.addEventListener("click", function (event) {
+  likeContentDiv.addEventListener("click", function () {
     toggleLike(likeContentDiv);
   });
 
