@@ -14,6 +14,7 @@ function displayModal() {
 
   const contactModalTitle = document.getElementById("contact_modal_title");
   contactModalTitle.innerHTML = `Contactez-moi <br> ${photographerName}`;
+  contactModalTitle.setAttribute("tabindex", "0");
   const filter = document.createElement("div");
   document.body.appendChild(filter);
   filter.style.display = "block";
